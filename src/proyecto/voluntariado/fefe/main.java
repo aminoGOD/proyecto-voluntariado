@@ -95,4 +95,87 @@ public class LeerCSV {
         scanner.close();
     }
 
+    // Método para insertar una persona manualmente
+    public static void insertarPersona(Scanner scanner) {
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Primer Apellido: ");
+        String primerApellido = scanner.nextLine();
+
+        System.out.print("Segundo Apellido: ");
+        String segundoApellido = scanner.nextLine();
+
+        System.out.print("RUT: ");
+        String rut = scanner.nextLine();
+
+        System.out.print("Género: ");
+        String genero = scanner.nextLine();
+
+        System.out.print("Fecha de Nacimiento (YYYY-MM-DD): ");
+        String fechaNacimiento = scanner.nextLine();
+
+        System.out.print("Correo: ");
+        String correo = scanner.nextLine();
+
+        System.out.print("Número de Teléfono: ");
+        int numero = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer
+
+        System.out.print("Región: ");
+        String region = scanner.nextLine();
+
+        System.out.print("Comuna: ");
+        String comuna = scanner.nextLine();
+
+        // Crear la persona
+        Personas persona = new Personas(nombre, primerApellido, segundoApellido, rut);
+        persona.agregarInformacionPersonal(genero, fechaNacimiento, correo, numero);
+        persona.getInformacionPersonalList().get(0).setRegion(region);
+        persona.getInformacionPersonalList().get(0).setComuna(comuna);
+
+        // Añadir la persona al mapa
+        mapaPersonas.put(rut, persona);
+
+        System.out.println("Persona añadida exitosamente.");
+    }
+
+    // Método para mostrar todas las personas
+    public static void mostrarPersonas() {
+        for (Personas persona : mapaPersonas.values()) {
+            System.out.println("Nombre: " + persona.getNombre() + " " + persona.getPrimerApellido() + " " + persona.getSegundoApellido());
+            System.out.println("RUT: " + persona.getRut());
+            for (InformacionPersonal info : persona.getInformacionPersonalList()) {
+                System.out.println("Genero: " + info.getGenero());
+                System.out.println("Fecha Nacimiento: " + info.getFechaNacimiento());
+                System.out.println("Correo: " + info.getCorreo());
+                System.out.println("Comuna: " + info.getComuna());
+                System.out.println("Region: " + info.getRegion());
+                System.out.println("---------------------");
+            }
+        }
+    }
+
+    // Método para buscar persona por RUT
+    public static void buscarPersonaPorRUT(Scanner scanner) {
+        System.out.print("Ingresa el RUT de la persona a buscar: ");
+        String rut = scanner.nextLine();
+
+        if (mapaPersonas.containsKey(rut)) {
+            Personas persona = mapaPersonas.get(rut);
+            System.out.println("Nombre: " + persona.getNombre() + " " + persona.getPrimerApellido() + " " + persona.getSegundoApellido());
+            System.out.println("RUT: " + persona.getRut());
+            for (InformacionPersonal info : persona.getInformacionPersonalList()) {
+                System.out.println("Genero: " + info.getGenero());
+                System.out.println("Fecha Nacimiento: " + info.getFechaNacimiento());
+                System.out.println("Correo: " + info.getCorreo());
+                System.out.println("Comuna: " + info.getComuna());
+                System.out.println("Region: " + info.getRegion());
+                System.out.println("---------------------");
+            }
+        } else {
+            System.out.println("Persona no encontrada con el RUT: " + rut);
+        }
+    }
+}
     
